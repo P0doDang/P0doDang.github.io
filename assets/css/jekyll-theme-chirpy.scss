@@ -1,13 +1,13 @@
 ---
 ---
 
-@import "main
+@use "main
 {%- if jekyll.environment == 'production' -%}
   .bundle
 {%- endif -%}
 ";
 
-/* 여기부터 내가 바꿀 스타일 */
+/* 내 스타일 */
 :root {
   --link-color: #e5446d;
 }
