@@ -1,0 +1,9 @@
+---
+title: 첫 블로그
+date: 2026-10-31 01:20:00 +0900
+categories: [Bug Bounty]
+tags: [블로그, 시작]
+---
+
+## 안녕하세요
+GitHub Pages로 블로그를 만들었어요.
