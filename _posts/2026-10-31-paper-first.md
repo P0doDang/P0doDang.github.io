@@ -1,7 +1,7 @@
 ---
 title: Conference
 date: 2026-10-31 01:20:00 +0900
-categories: [논문-컨퍼런스]
+categories: [Knights Frontier, "논문/컨퍼런스"]
 tags: [블로그, 시작]
 ---
 

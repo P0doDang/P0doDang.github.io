@@ -1,7 +1,7 @@
 ---
 title: Bug Bounty
 date: 2026-10-31 01:20:00 +0900
-categories: [Bug Bounty]
+categories: [Knights Frontier, Bug Bounty]
 tags: [블로그, 시작]
 ---
 
