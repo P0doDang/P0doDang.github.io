@@ -16,7 +16,7 @@ order: 4
 
 # **Experiences**
 ---
-- **Knights Frontier 3rd** (HSPACE'|'Nov.2026 ~ Present)
+- **Knights Frontier 3rd** (HSPACE\|Nov.2026 ~ Present)
   - 
 
 # **Projects**
