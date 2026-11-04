@@ -1,7 +1,7 @@
 ---
 title: Contest
 date: 2026-10-31 01:20:00 +0900
-categories: [공모전-자격증]
+categories: [Knights Frontiet, 공모전-자격증]
 tags: [블로그, 시작]
 ---
 
