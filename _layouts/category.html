@@ -1,0 +1,31 @@
+---
+layout: default
+---
+{%- assign cname = page.title -%}
+{%- assign cposts = page.posts | sort: "date" | reverse -%}
+{%- assign parent = nil -%}
+{%- assign subs = "" | split: "" -%}
+{%- for p in cposts -%}
+  {%- if p.categories[0] == cname and p.categories[1] -%}
+    {%- unless subs contains p.categories[1] -%}
+      {%- assign subs = subs | push: p.categories[1] -%}
+    {%- endunless -%}
+  {%- elsif p.categories[1] == cname -%}
+    {%- assign parent = p.categories[0] -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign subs = subs | sort %}
+<header class="page-head">
+<p class="crumb"><a href="{{ '/categories/' | relative_url }}">카테고리</a> /
+{%- if parent %} <a href="{{ parent | slugify | url_encode | prepend: '/categories/' | append: '/' | relative_url }}">{{ parent }}</a> /{% endif %} {{ cname }}</p>
+<h1 class="page-title">{{ cname }}</h1>
+<p class="page-sub">{{ cposts | size }}편</p>
+{%- if subs.size > 0 %}
+<ul class="chips">
+{%- for s in subs %}
+<li><a class="tag" href="{{ s | slugify | url_encode | prepend: '/categories/' | append: '/' | relative_url }}">{{ s }} <span>{{ site.categories[s] | size }}</span></a></li>
+{%- endfor %}
+</ul>
+{%- endif %}
+</header>
+{% include post-rows.html posts=cposts %}

@@ -1,0 +1,49 @@
+---
+layout: default
+---
+{%- assign pf = site.data.profile -%}
+{%- assign recent = site.posts | slice: 0, 8 %}
+<section class="hero">
+<div class="hero-main">
+<p class="eyebrow">{{ pf.eyebrow }}</p>
+<h1 class="hero-name">{{ pf.name | default: site.title }}</h1>
+<p class="hero-sub">{{ site.tagline }}</p>
+</div>
+{%- if pf.now.size > 0 %}
+<aside class="now" aria-label="지금 하는 일">
+<h2>지금 하는 일</h2>
+<ul>
+{%- for item in pf.now %}
+<li>{{ item.title }} <span>{{ item.note }}</span></li>
+{%- endfor %}
+</ul>
+</aside>
+{%- endif %}
+</section>
+
+<section class="section" aria-labelledby="sec-cat">
+<div class="section-head"><h2 class="section-title" id="sec-cat">카테고리</h2></div>
+{% include category-grid.html %}
+</section>
+
+<section class="section" aria-labelledby="sec-recent">
+<div class="section-head">
+<h2 class="section-title" id="sec-recent">최근 글</h2>
+<a class="more" href="{{ '/archives/' | relative_url }}">전체 글 보기 →</a>
+</div>
+{% include post-rows.html posts=recent %}
+</section>
+
+{%- if pf.timeline.size > 0 %}
+<section class="section" aria-labelledby="sec-about">
+<div class="section-head">
+<h2 class="section-title" id="sec-about">소개</h2>
+<a class="more" href="{{ '/about/' | relative_url }}">자세히 보기 →</a>
+</div>
+<dl class="timeline">
+{%- for t in pf.timeline %}
+<dt>{{ t.when }}</dt><dd>{{ t.what }}</dd>
+{%- endfor %}
+</dl>
+</section>
+{%- endif %}

@@ -1,0 +1,13 @@
+{%- if include.posts.size > 0 -%}
+<ul class="post-rows">
+{%- for post in include.posts %}
+<li>
+<time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y.%m.%d" }}</time>
+<a class="row-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+<span class="row-cat">{{ post.categories | last }}</span>
+</li>
+{%- endfor %}
+</ul>
+{%- else -%}
+<p class="empty-note">아직 글이 없어요.</p>
+{%- endif -%}

@@ -1,0 +1,9 @@
+<footer class="site-footer">
+<div class="wrap foot">
+<span>© {{ site.time | date: '%Y' }} {{ site.data.profile.name | default: site.title }}</span>
+<span class="foot-links">
+{%- if site.github.username -%}<a href="https://github.com/{{ site.github.username }}">GitHub</a>{%- endif -%}
+{%- if site.twitter.username -%}<a href="https://x.com/{{ site.twitter.username }}">X</a>{%- endif -%}
+</span>
+</div>
+</footer>

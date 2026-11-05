@@ -2,7 +2,13 @@
 
 source "https://rubygems.org"
 
-gem "jekyll-theme-chirpy", "~> 7.6"
+gem "jekyll", "~> 4.3"
+
+# 카테고리/태그 페이지를 자동으로 만들어 주는 플러그인
+gem "jekyll-archives", "~> 2.2"
+
+# Ruby 3 이상에서 로컬 미리보기(`jekyll serve`)에 필요해요.
+gem "webrick", "~> 1.8"
 
 gem "html-proofer", "~> 5.0", group: :test
 

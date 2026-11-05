@@ -1,6 +1,8 @@
 ---
-icon: fas fa-info-circle
-order: 4
+layout: page
+title: 소개
+permalink: /about/
+hide_title: true
 ---
 
 # **Yuchan Jeong (a.k.a. P0doDang)**

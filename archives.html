@@ -1,0 +1,15 @@
+---
+layout: page
+title: 전체 글
+permalink: /archives/
+wide: true
+---
+{%- assign by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" -%}
+{%- for year in by_year %}
+<section class="year-group">
+<h2 class="section-title">{{ year.name }} <span class="year-count">{{ year.items | size }}편</span></h2>
+{% include post-rows.html posts=year.items %}
+</section>
+{%- else %}
+<p class="empty-note">아직 글이 없어요.</p>
+{%- endfor %}

@@ -1,0 +1,16 @@
+---
+layout: page
+title: 태그
+permalink: /tags/
+wide: true
+---
+{%- assign tag_list = site.tags | sort -%}
+{%- if tag_list.size > 0 %}
+<ul class="chips">
+{%- for t in tag_list %}
+<li><a class="tag" href="{{ t[0] | slugify | url_encode | prepend: '/tags/' | append: '/' | relative_url }}">#{{ t[0] }} <span>{{ t[1] | size }}</span></a></li>
+{%- endfor %}
+</ul>
+{%- else %}
+<p class="empty-note">아직 태그가 없어요.</p>
+{%- endif %}

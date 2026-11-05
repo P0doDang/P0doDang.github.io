@@ -1,0 +1,14 @@
+<header class="site-header">
+<div class="wrap">
+<nav class="nav" aria-label="주 메뉴">
+<a class="brand" href="{{ '/' | relative_url }}">{{ site.data.profile.name | default: site.title }}</a>
+<ul class="nav-links">
+<li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>홈</a></li>
+<li><a href="{{ '/categories/' | relative_url }}"{% if page.url contains '/categories/' %} aria-current="page"{% endif %}>카테고리</a></li>
+<li><a href="{{ '/tags/' | relative_url }}"{% if page.url contains '/tags/' %} aria-current="page"{% endif %}>태그</a></li>
+<li><a href="{{ '/archives/' | relative_url }}"{% if page.url contains '/archives/' %} aria-current="page"{% endif %}>전체 글</a></li>
+<li><a href="{{ '/about/' | relative_url }}"{% if page.url contains '/about/' %} aria-current="page"{% endif %}>소개</a></li>
+</ul>
+</nav>
+</div>
+</header>

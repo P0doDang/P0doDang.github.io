@@ -1,0 +1,47 @@
+{%- comment -%}
+  카테고리 카드. _data/categories.yml의 상위 카테고리는 항상 보이고,
+  거기에 없는 상위 카테고리는 글이 생기면 자동으로 뒤에 붙는다.
+{%- endcomment -%}
+{%- assign top_names = site.data.categories | map: "name" -%}
+{%- assign sorted_categories = site.categories | sort -%}
+{%- for entry in sorted_categories -%}
+  {%- assign entry_name = entry[0] -%}
+  {%- assign entry_first = entry[1] | first -%}
+  {%- if entry_name == entry_first.categories[0] -%}
+    {%- unless top_names contains entry_name -%}
+      {%- assign top_names = top_names | push: entry_name -%}
+    {%- endunless -%}
+  {%- endif -%}
+{%- endfor -%}
+<div class="cat-grid">
+{%- for cname in top_names -%}
+  {%- assign cposts = site.categories[cname] -%}
+  {%- assign ccount = cposts | size -%}
+  {%- assign cmeta = nil -%}
+  {%- for c in site.data.categories -%}
+    {%- if c.name == cname -%}{%- assign cmeta = c -%}{%- endif -%}
+  {%- endfor -%}
+  {%- assign subs = "" | split: "" -%}
+  {%- for p in cposts -%}
+    {%- if p.categories[0] == cname and p.categories[1] -%}
+      {%- unless subs contains p.categories[1] -%}
+        {%- assign subs = subs | push: p.categories[1] -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign subs = subs | sort -%}
+<div class="cat-card{% if cmeta.featured %} hot{% endif %}{% if ccount == 0 %} empty{% endif %}">
+<h3>{% if ccount > 0 %}<a class="cat-link" href="{{ cname | slugify | url_encode | prepend: '/categories/' | append: '/' | relative_url }}">{{ cname }}</a>{% else %}{{ cname }}{% endif %}</h3>
+{%- if cmeta.desc %}
+<p class="cat-desc">{{ cmeta.desc }}</p>
+{%- endif %}
+{%- if subs.size > 0 %}
+<p class="cat-sub">하위:
+{%- for s in subs %} <a href="{{ s | slugify | url_encode | prepend: '/categories/' | append: '/' | relative_url }}">{{ s }}</a> {{ site.categories[s] | size }}편{% unless forloop.last %},{% endunless %}
+{%- endfor -%}
+</p>
+{%- endif %}
+<span class="cat-count">{% if ccount > 0 %}{{ ccount }}편{% else %}아직 글이 없어요{% endif %}</span>
+</div>
+{%- endfor -%}
+</div>

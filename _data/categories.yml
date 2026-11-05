@@ -1,0 +1,22 @@
+# 홈과 카테고리 화면에 항상 보이는 상위 카테고리예요 (글이 없어도 표시돼요).
+# name은 글의 categories 값과 글자 하나까지 똑같아야 해요.
+# 여기에 없는 상위 카테고리는 글이 생기면 자동으로 뒤에 추가돼요.
+
+- name: 개발
+  desc: 프로젝트와 설계 메모
+
+- name: CTF/Wargame
+  desc: 문제 풀이와 write-up
+  featured: true # 검은 카드로 강조해요. 한 개만 쓰는 걸 권장해요.
+
+- name: Bug Bounty
+  desc: 취약점 분석과 학습 기록
+
+- name: 기술문서/리서치
+  desc: 정리한 기술 글
+
+- name: 논문/컨퍼런스
+  desc: 읽은 논문과 참석 후기
+
+- name: 공모전/자격증
+  desc: 도전과 준비 기록
