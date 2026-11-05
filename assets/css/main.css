@@ -15,7 +15,7 @@
   --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* 홈 큰 닉네임 전용. 글꼴이 안 불러와지면 점이 있는 0의 JetBrains Mono로 대체돼요 */
-  --font-hero: "Space Grotesk", var(--font-mono);
+    --font-hero: "Oxanium", var(--font-mono);
 
   --maxw: 1080px;
 }
@@ -48,7 +48,7 @@ main.wrap { padding-top: 12px; padding-bottom: 72px; }
 /* 상단 메뉴 */
 .site-header { border-bottom: 1px solid var(--line); }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 16px 0; flex-wrap: wrap; }
-.brand { font: 800 18px/1 var(--font-mono); letter-spacing: -0.03em; text-decoration: none; }
+.brand { font: 700 18px/1 var(--font-hero); letter-spacing: 0; text-decoration: none; }
 .nav-links { display: flex; gap: 6px 22px; list-style: none; margin: 0; padding: 0; font-size: 15px; font-weight: 500; flex-wrap: wrap; }
 .nav-links a { text-decoration: none; padding: 2px 0 3px; border-bottom: 2px solid transparent; }
 .nav-links a:hover { border-bottom-color: var(--line); }
@@ -58,7 +58,7 @@ main.wrap { padding-top: 12px; padding-bottom: 72px; }
 .hero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px; align-items: end; padding: 48px 0 8px; }
 .hero > * { min-width: 0; }
 .eyebrow { margin: 0 0 12px; font: 700 12px/1 var(--font-mono); letter-spacing: 0.16em; color: var(--accent); }
-.hero-name { margin: 0; font: 700 clamp(44px, 10.5vw, 112px)/0.98 var(--font-hero); letter-spacing: -0.04em; overflow-wrap: anywhere; }
+.hero-name { margin: 0; font: 800 clamp(44px, 10.5vw, 112px)/0.98 var(--font-hero); letter-spacing: -0.04em; overflow-wrap: anywhere; }
 .hero-sub { margin: 16px 0 0; font-size: 19px; max-width: 30ch; text-wrap: balance; }
 .now { border: 2px solid var(--ink); border-radius: 14px; padding: 16px 18px; }
 .now h2 { margin: 0 0 10px; font: 700 13px/1 var(--font-body); letter-spacing: 0.08em; color: var(--mute); }
