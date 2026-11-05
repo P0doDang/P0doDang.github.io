@@ -5,7 +5,7 @@ eyebrow: SECURITY · DEV LOG
 
 # 홈 오른쪽 "지금 하는 일" 상자 (3~4개 권장)
 now:
-  - title: Knights Frontier 3기
+  - title: Knights Frontier 3rd
     note: HSPACE
   - title: Cube Solver Project
     note: 2026.05 ~
@@ -15,4 +15,4 @@ timeline:
   - when: 2023.03 ~ 현재
     what: 세종대학교 정보보호학과 재학 (S!_9th)
   - when: 2026.11 ~ 현재
-    what: Knights Frontier 3기 (HSPACE)
+    what: Knights Frontier 3rd (HSPACE)

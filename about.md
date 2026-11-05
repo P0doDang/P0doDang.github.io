@@ -13,7 +13,7 @@ hide_title: true
 
 # **Education**
 ---
-- **B.S. in Information Security** @ [S!](https://sites.google.com/site/ssfactorial/home) (Mar. 2023 ~ Present)
+- **B.S. in Information Security** @ [S!_9th](https://sites.google.com/site/ssfactorial/home) (Mar. 2023 ~ Present)
   - Sejong University at Seoul, Korea
 
 # **Experiences**
