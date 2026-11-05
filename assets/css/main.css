@@ -82,7 +82,9 @@ main.wrap { padding-top: 12px; padding-bottom: 72px; }
 .cat-desc { margin: 0; font-size: 14px; color: var(--mute); }
 .cat-sub { margin: 0; font-size: 13px; color: var(--mute); position: relative; z-index: 1; }
 .cat-sub a { color: var(--ink); font-weight: 600; }
-.cat-count { margin-top: auto; font: 700 13px var(--font-mono); }
+.cat-foot { margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; gap: 8px 12px; flex-wrap: wrap; }
+.cat-count { font: 700 13px var(--font-mono); }
+.cat-badge { font: 700 12px/1.4 var(--font-body); color: var(--accent-on-ink); }
 .cat-card.empty { border-color: var(--line); }
 .cat-card.empty h3 { color: var(--mute); }
 .cat-card.empty .cat-count { color: var(--mute); font-weight: 500; font-family: var(--font-body); }

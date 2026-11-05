@@ -2,6 +2,8 @@
   카테고리 카드. _data/categories.yml의 상위 카테고리는 항상 보이고,
   거기에 없는 상위 카테고리는 글이 생기면 자동으로 뒤에 붙는다.
 {%- endcomment -%}
+{%- assign latest_post = site.posts | first -%}
+{%- assign latest_cat = latest_post.categories | first -%}
 {%- assign top_names = site.data.categories | map: "name" -%}
 {%- assign sorted_categories = site.categories | sort -%}
 {%- for entry in sorted_categories -%}
@@ -30,7 +32,7 @@
     {%- endif -%}
   {%- endfor -%}
   {%- assign subs = subs | sort -%}
-<div class="cat-card{% if cmeta.featured %} hot{% endif %}{% if ccount == 0 %} empty{% endif %}">
+<div class="cat-card{% if cname == latest_cat %} hot{% endif %}{% if ccount == 0 %} empty{% endif %}">
 <h3>{% if ccount > 0 %}<a class="cat-link" href="{{ cname | slugify | url_encode | prepend: '/categories/' | append: '/' | relative_url }}">{{ cname }}</a>{% else %}{{ cname }}{% endif %}</h3>
 {%- if cmeta.desc %}
 <p class="cat-desc">{{ cmeta.desc }}</p>
@@ -41,7 +43,12 @@
 {%- endfor -%}
 </p>
 {%- endif %}
+<div class="cat-foot">
 <span class="cat-count">{% if ccount > 0 %}{{ ccount }}편{% else %}아직 글이 없어요{% endif %}</span>
+{%- if cname == latest_cat %}
+<span class="cat-badge">가장 최근에 업로드 됨</span>
+{%- endif %}
+</div>
 </div>
 {%- endfor -%}
 </div>
