@@ -8,6 +8,10 @@
   --soft: #f3f3f6;
   --accent: #e3006f;
   --accent-on-ink: #ff6fb2;
+  --hot-bg: #111114;      /* 강조 카드 배경 */
+  --hot-fg: #ffffff;      /* 강조 카드 글자 */
+  --hot-muted: #c9c9d3;   /* 강조 카드 보조 글자 */
+  --code-bg: #16161b;     /* 코드 블록 배경 */
 
   /* 제목과 본문: 한글 획이 또렷한 IBM Plex Sans KR */
   --font-body: "IBM Plex Sans KR", "Noto Sans KR", system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
@@ -15,9 +19,26 @@
   --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* 홈 큰 닉네임 전용. 글꼴이 안 불러와지면 점이 있는 0의 JetBrains Mono로 대체돼요 */
-    --font-hero: "Oxanium", var(--font-mono);
+  --font-hero: "Oxanium", var(--font-mono);
 
   --maxw: 1080px;
+}
+
+/* 다크 모드: 위 변수 중 색만 바꿔요 */
+:root { color-scheme: light; }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e0e11;
+  --ink: #f1f1f4;
+  --mute: #a3a3b0;
+  --line: #2b2b33;
+  --soft: #1b1b21;
+  --accent: #ff5ca8;
+  --accent-on-ink: #c4005f;
+  --hot-bg: #f1f1f4;
+  --hot-fg: #111114;
+  --hot-muted: #55555f;
+  --code-bg: #1a1a21;
 }
 
 * { box-sizing: border-box; }
@@ -53,6 +74,12 @@ main.wrap { padding-top: 12px; padding-bottom: 72px; }
 .nav-links a { text-decoration: none; padding: 2px 0 3px; border-bottom: 2px solid transparent; }
 .nav-links a:hover { border-bottom-color: var(--line); }
 .nav-links a[aria-current="page"] { border-bottom-color: var(--accent); }
+.nav-links { align-items: center; }
+.theme-toggle { display: inline-grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 2px solid var(--ink); border-radius: 999px; background: transparent; color: var(--ink); cursor: pointer; }
+.theme-toggle:hover { background: var(--ink); color: var(--bg); }
+.theme-toggle .i-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .i-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .i-moon { display: none; }
 
 /* 홈 첫 화면 */
 .hero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px; align-items: end; padding: 48px 0 8px; }
@@ -88,9 +115,9 @@ main.wrap { padding-top: 12px; padding-bottom: 72px; }
 .cat-card.empty { border-color: var(--line); }
 .cat-card.empty h3 { color: var(--mute); }
 .cat-card.empty .cat-count { color: var(--mute); font-weight: 500; font-family: var(--font-body); }
-.cat-card.hot { background: var(--ink); color: #fff; }
-.cat-card.hot .cat-desc, .cat-card.hot .cat-sub { color: #c9c9d3; }
-.cat-card.hot .cat-sub a { color: #fff; }
+.cat-card.hot { background: var(--hot-bg); color: var(--hot-fg); }
+.cat-card.hot .cat-desc, .cat-card.hot .cat-sub { color: var(--hot-muted); }
+.cat-card.hot .cat-sub a { color: var(--hot-fg); }
 .cat-card.hot .cat-count { color: var(--accent-on-ink); }
 @media (prefers-reduced-motion: no-preference) {
   .cat-card { transition: transform 0.12s ease, box-shadow 0.12s ease; }
@@ -126,8 +153,8 @@ main > .page > .page-title { padding-top: 36px; margin-bottom: 20px; }
 .chips { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .tag { display: inline-block; text-decoration: none; background: var(--soft); border-radius: 999px; padding: 2px 12px; font: 500 13px var(--font-mono); }
 .tag span { color: var(--mute); margin-left: 4px; }
-.tag:hover { background: var(--ink); color: #fff; }
-.tag:hover span { color: #c9c9d3; }
+.tag:hover { background: var(--ink); color: var(--bg); }
+.tag:hover span { color: var(--bg); opacity: 0.7; }
 
 /* 글 */
 .post-h1 { margin: 0 0 10px; font: 700 clamp(28px, 4.6vw, 40px)/1.3 var(--font-body); text-wrap: balance; }
@@ -157,7 +184,7 @@ main > .page > .page-title { padding-top: 36px; margin-bottom: 20px; }
 .prose pre code { background: none; padding: 0; font-size: inherit; }
 .prose div.highlighter-rouge { margin: 20px 0; border-radius: 12px; overflow: hidden; }
 .prose div.highlight { border-radius: 12px; }
-.prose div.highlight, .prose pre.highlight { background: #16161b; }
+.prose div.highlight, .prose pre.highlight { background: var(--code-bg); }
 .prose table { border-collapse: collapse; display: block; overflow-x: auto; max-width: 100%; }
 .prose th, .prose td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; }
 .prose th { background: var(--soft); }
