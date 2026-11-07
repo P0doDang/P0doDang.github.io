@@ -9,6 +9,10 @@
   {%- assign page_title = page.title | append: ' | ' | append: site.title -%}
 {%- endif -%}
 {%- assign page_desc = page.description | default: site.description -%}
+<script>
+// 예전 테마의 서비스 워커/캐시가 남아 있으면 정리해요.
+(function(){try{if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(x){x.unregister()})})}if(window.caches){caches.keys().then(function(k){k.forEach(function(n){caches.delete(n)})})}}catch(e){}})();
+</script>
 <title>{{ page_title }}</title>
 <meta name="description" content="{{ page_desc | strip_html | strip_newlines | escape }}">
 <link rel="canonical" href="{{ page.url | absolute_url }}">
@@ -27,6 +31,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500;800&family=Oxanium:wght@700;800&display=swap">
-<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/css/syntax.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+<link rel="stylesheet" href="{{ '/assets/css/syntax.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 </head>
