@@ -51,20 +51,27 @@ layout: default
 
 <script>
 (function(){
-  /* 목차: 제목에 <toc>를 붙인 것만 나오고(목차에는 <toc> 안의 글자만 쓴다), 하나도 없으면 #, ##, ### 제목 전체가 나온다 */
-  var all=[].slice.call(document.querySelectorAll('.prose h1[id], .prose h2[id], .prose h3[id]'));
-  var marked=all.filter(function(h){return h.querySelector('toc')});
-  var heads=marked.length?marked:all;
+  /* 목차: 제목에 <toc>(1단계) <toc2>(2단계) <toc3>(3단계)를 붙인 것만 나오고, 단계는 쓴 숫자로 정해진다.
+     하나도 없으면 #, ##, ### 제목 전체가 제목 단계대로 들여써서 나온다 */
+  var SEL='toc,toc1,toc2,toc3';
+  var every=[].slice.call(document.querySelectorAll('.prose :is(h1,h2,h3,h4,h5,h6)[id]'));
+  var marked=every.filter(function(h){return h.querySelector(SEL)});
+  var auto=!marked.length;
+  var heads=auto?every.filter(function(h){return /^H[123]$/.test(h.tagName)}):marked;
   var side=document.querySelector('aside.toc'), inline=document.querySelector('.toc-inline');
   if(heads.length<2||!side) return;
   var stack=[], html='';
   heads.forEach(function(h,i){
-    var lv=+h.tagName.charAt(1);
-    while(stack.length&&stack[stack.length-1]>=lv) stack.pop();
-    var depth=Math.min(stack.length,2);
-    stack.push(lv);
-    var t=h.querySelector('toc');
-    var text=(t?t.textContent:h.textContent).trim().replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]});
+    var depth, text;
+    if(auto){
+      var lv=+h.tagName.charAt(1);
+      while(stack.length&&stack[stack.length-1]>=lv) stack.pop();
+      depth=Math.min(stack.length,2); stack.push(lv); text=h.textContent;
+    } else {
+      var m=h.querySelector(SEL), n=parseInt(m.tagName.slice(3),10)||1;
+      depth=Math.min(Math.max(n,1),3)-1; text=m.textContent;
+    }
+    text=text.trim().replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]});
     html+='<li class="d'+depth+'"><a href="#'+h.id+'" data-i="'+i+'">'+text+'</a></li>';
   });
   [].forEach.call(document.querySelectorAll('.toc-list'),function(l){l.innerHTML=html});
