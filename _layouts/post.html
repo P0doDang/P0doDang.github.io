@@ -51,18 +51,21 @@ layout: default
 
 <script>
 (function(){
-  /* 목차: 제목에 <toc>를 붙인 것만 나오고, 하나도 없으면 ##, ### 제목 전체가 나온다 */
-  var all=[].slice.call(document.querySelectorAll('.prose h2[id], .prose h3[id]'));
+  /* 목차: 제목에 <toc>를 붙인 것만 나오고(목차에는 <toc> 안의 글자만 쓴다), 하나도 없으면 #, ##, ### 제목 전체가 나온다 */
+  var all=[].slice.call(document.querySelectorAll('.prose h1[id], .prose h2[id], .prose h3[id]'));
   var marked=all.filter(function(h){return h.querySelector('toc')});
   var heads=marked.length?marked:all;
   var side=document.querySelector('aside.toc'), inline=document.querySelector('.toc-inline');
   if(heads.length<2||!side) return;
-  var seenH2=false, html='';
+  var stack=[], html='';
   heads.forEach(function(h,i){
-    var nested=h.tagName==='H3'&&seenH2;
-    if(h.tagName==='H2') seenH2=true;
-    var text=h.textContent.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]});
-    html+='<li class="'+(nested?'toc-sub':'')+'"><a href="#'+h.id+'" data-i="'+i+'">'+text+'</a></li>';
+    var lv=+h.tagName.charAt(1);
+    while(stack.length&&stack[stack.length-1]>=lv) stack.pop();
+    var depth=Math.min(stack.length,2);
+    stack.push(lv);
+    var t=h.querySelector('toc');
+    var text=(t?t.textContent:h.textContent).trim().replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]});
+    html+='<li class="d'+depth+'"><a href="#'+h.id+'" data-i="'+i+'">'+text+'</a></li>';
   });
   [].forEach.call(document.querySelectorAll('.toc-list'),function(l){l.innerHTML=html});
   side.hidden=false; inline.hidden=false;
