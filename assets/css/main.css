@@ -160,9 +160,12 @@ main > .page > .page-title { padding-top: 36px; margin-bottom: 20px; }
 .post-h1 { margin: 0 0 10px; font: 700 clamp(28px, 4.6vw, 40px)/1.3 var(--font-body); text-wrap: balance; }
 .post-meta { margin: 0; color: var(--mute); font-size: 14px; }
 .post-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 40px; }
-.post-nav a { display: block; border: 2px solid var(--ink); border-radius: 12px; padding: 8px 14px; text-decoration: none; font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.post-nav a span { display: block; font: 500 11px var(--font-mono); color: var(--mute); margin-bottom: 0; }
-.post-nav .next { text-align: right; }
+.post-nav a { display: grid; align-items: center; column-gap: 16px; border: 2px solid var(--ink); border-radius: 12px; padding: 12px 20px; text-decoration: none; font-weight: 600; font-size: 17px; }
+.post-nav a span { display: block; font: 500 12px var(--font-mono); color: var(--mute); margin-bottom: 2px; }
+.post-nav .prev { grid-template-columns: auto minmax(0, 1fr); }
+.post-nav .prev::before { content: "←"; grid-row: 1 / span 2; font: 700 24px/1 var(--font-mono); color: var(--accent); }
+.post-nav .next { grid-template-columns: minmax(0, 1fr) auto; }
+.post-nav .next::after { content: "→"; grid-column: 2; grid-row: 1 / span 2; font: 700 24px/1 var(--font-mono); color: var(--accent); }
 .post-nav a:hover { background: var(--soft); }
 
 /* 글 목차 */
@@ -256,7 +259,7 @@ html { scroll-behavior: smooth; }
 .prose div.highlighter-rouge { margin: 20px 0; border-radius: 12px; overflow: hidden; }
 .prose div.highlight { border-radius: 12px; }
 .prose div.highlight, .prose pre.highlight { background: var(--code-bg); }
-.prose table { border-collapse: collapse; display: block; overflow-x: auto; max-width: 100%; }
+.prose table { border-collapse: collapse; display: block; overflow-x: auto; max-width: 100%; width: fit-content; }
 .prose th, .prose td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; }
 .prose th { background: var(--soft); }
 .prose img { border-radius: 10px; }
