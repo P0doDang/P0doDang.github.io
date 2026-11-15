@@ -2,7 +2,7 @@
 title: "[Project] SIEM Upgrade, Wazuh 탐지 룰 개선하기"
 date: 2026-11-14 12:00:00 +0900
 categories: ["개발"]
-tags: [Project, SIEM, Wazuh, 탐지 룰, MITRE ATT&CK]
+tags: [Project, SIEM, Wazuh, MITRE ATT&CK]
 ---
 
 # 프로젝트 소개

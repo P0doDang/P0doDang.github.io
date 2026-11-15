@@ -165,6 +165,30 @@ main > .page > .page-title { padding-top: 36px; margin-bottom: 20px; }
 .post-nav .next { text-align: right; }
 .post-nav a:hover { background: var(--soft); }
 
+/* 글 목차 */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.prose :is(h2, h3, h4) { scroll-margin-top: 24px; }
+.post-body { display: grid; grid-template-columns: minmax(0, 760px) 220px; gap: 48px; align-items: start; }
+.post-body > * { min-width: 0; }
+.toc { position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow-y: auto; border-left: 2px solid var(--line); padding-left: 16px; font-size: 14px; }
+.toc-title { margin: 0 0 8px; font: 700 12px/1 var(--font-mono); letter-spacing: 0.12em; color: var(--mute); }
+.toc-list { list-style: none; margin: 0; padding: 0; }
+.toc-list li { margin: 0; }
+.toc-list a { display: block; padding: 4px 0; color: var(--mute); text-decoration: none; line-height: 1.45; }
+.toc-list .toc-sub a { padding-left: 14px; }
+.toc-list a:hover { color: var(--ink); }
+.toc-list a[aria-current="true"] { color: var(--accent); font-weight: 600; }
+.toc-inline { display: none; margin: 0 0 24px; border: 2px solid var(--ink); border-radius: 14px; padding: 10px 16px; font-size: 15px; }
+.toc-inline summary { cursor: pointer; font-weight: 700; }
+.toc-inline .toc-list { margin-top: 8px; }
+@media (max-width: 1099px) {
+  .post-body { grid-template-columns: minmax(0, 1fr); }
+  .toc { display: none; }
+  .toc-inline:not([hidden]) { display: block; }
+}
+
+
 /* 본문 서식 */
 .prose { max-width: 760px; font-size: 17px; line-height: 1.85; }
 .wide { max-width: none; }

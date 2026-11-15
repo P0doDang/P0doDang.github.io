@@ -24,8 +24,19 @@ layout: default
 {%- endif %}
 </header>
 
+<details class="toc-inline" hidden>
+<summary>목차</summary>
+<ol class="toc-list"></ol>
+</details>
+
+<div class="post-body">
 <div class="prose">
 {{ content }}
+</div>
+<aside class="toc" aria-label="목차" hidden>
+<p class="toc-title">목차</p>
+<ol class="toc-list"></ol>
+</aside>
 </div>
 
 <nav class="post-nav" aria-label="이전 글과 다음 글">
@@ -37,3 +48,35 @@ layout: default
 {%- else %}<span></span>{% endif %}
 </nav>
 </article>
+
+<script>
+(function(){
+  /* 목차: 제목에 <toc>를 붙인 것만 나오고, 하나도 없으면 ##, ### 제목 전체가 나온다 */
+  var all=[].slice.call(document.querySelectorAll('.prose h2[id], .prose h3[id]'));
+  var marked=all.filter(function(h){return h.querySelector('toc')});
+  var heads=marked.length?marked:all;
+  var side=document.querySelector('aside.toc'), inline=document.querySelector('.toc-inline');
+  if(heads.length<2||!side) return;
+  var seenH2=false, html='';
+  heads.forEach(function(h,i){
+    var nested=h.tagName==='H3'&&seenH2;
+    if(h.tagName==='H2') seenH2=true;
+    var text=h.textContent.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]});
+    html+='<li class="'+(nested?'toc-sub':'')+'"><a href="#'+h.id+'" data-i="'+i+'">'+text+'</a></li>';
+  });
+  [].forEach.call(document.querySelectorAll('.toc-list'),function(l){l.innerHTML=html});
+  side.hidden=false; inline.hidden=false;
+  var links=[].slice.call(document.querySelectorAll('.toc-list a')), cur=-1, tick=false;
+  function update(){
+    tick=false; var idx=-1;
+    for(var i=0;i<heads.length;i++){ if(heads[i].getBoundingClientRect().top<=110) idx=i; else break; }
+    if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) idx=heads.length-1;
+    if(idx===cur) return; cur=idx;
+    links.forEach(function(a){ if(+a.dataset.i===idx){a.setAttribute('aria-current','true')} else {a.removeAttribute('aria-current')} });
+    var a=side.querySelector('a[aria-current]');
+    if(a){ var r=a.getBoundingClientRect(), s=side.getBoundingClientRect(); if(r.top<s.top||r.bottom>s.bottom) a.scrollIntoView({block:'nearest'}); }
+  }
+  window.addEventListener('scroll',function(){ if(!tick){tick=true; requestAnimationFrame(update)} },{passive:true});
+  window.addEventListener('resize',update); update();
+})();
+</script>
