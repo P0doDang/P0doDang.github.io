@@ -52,7 +52,9 @@ layout: default
 <script>
 (function(){
   /* 목차: 제목에 <toc>(1단계) <toc2>(2단계) <toc3>(3단계)를 붙인 것만 나오고, 단계는 쓴 숫자로 정해진다.
-     하나도 없으면 #, ##, ### 제목 전체가 제목 단계대로 들여써서 나온다 */
+     하나도 없으면 #, ##, ### 제목 전체가 제목 단계대로 나온다.
+     1단계는 항상 보이고, 하위 항목은 "마우스를 올렸을 때 / 선택했을 때 / 현재 위치가 그 묶음 안일 때"만 열린다.
+     <toc3>는 자기 <toc2> 아래에서 따로 열린다. */
   var SEL='toc,toc1,toc2,toc3';
   var every=[].slice.call(document.querySelectorAll('.prose :is(h1,h2,h3,h4,h5,h6)[id]'));
   var marked=every.filter(function(h){return h.querySelector(SEL)});
@@ -60,7 +62,10 @@ layout: default
   var heads=auto?every.filter(function(h){return /^H[123]$/.test(h.tagName)}):marked;
   var side=document.querySelector('aside.toc'), inline=document.querySelector('.toc-inline');
   if(heads.length<2||!side) return;
-  var stack=[], html='';
+  function esc(s){return s.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+
+  /* 1) 단계(0,1,2)를 정한다 */
+  var stack=[], depths=[], texts=[];
   heads.forEach(function(h,i){
     var depth, text;
     if(auto){
@@ -71,22 +76,62 @@ layout: default
       var m=h.querySelector(SEL), n=parseInt(m.tagName.slice(3),10)||1;
       depth=Math.min(Math.max(n,1),3)-1; text=m.textContent;
     }
-    text=text.trim().replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]});
-    html+='<li class="d'+depth+'"><a href="#'+h.id+'" data-i="'+i+'">'+text+'</a></li>';
+    depths[i]=depth; texts[i]=text.trim();
   });
+
+  /* 2) 묶음을 만든다: 1단계 묶음 안에 2단계 묶음이 있고, 그 안에 3단계 항목이 있다 */
+  var gid=0, tops=[], g0=null, g1=null, openOf=[];
+  heads.forEach(function(h,i){
+    var d=depths[i], link='<a href="#'+h.id+'" data-i="'+i+'">'+esc(texts[i])+'</a>';
+    if(d===0){ g0={id:gid++,depth:0,head:link,kids:[]}; g1=null; tops.push(g0); openOf[i]=[g0.id]; }
+    else if(d===1){
+      if(g0){ g1={id:gid++,depth:1,head:link,kids:[]}; g0.kids.push(g1); openOf[i]=[g0.id,g1.id]; }
+      else { tops.push('<li class="d1">'+link+'</li>'); openOf[i]=[]; }
+    } else {
+      var li='<li class="d2">'+link+'</li>';
+      if(g1){ g1.kids.push(li); openOf[i]=[g0.id,g1.id]; }
+      else if(g0){ g0.kids.push(li); openOf[i]=[g0.id]; }
+      else { tops.push(li); openOf[i]=[]; }
+    }
+  });
+  function render(k){
+    if(typeof k==='string') return k;
+    if(!k.kids.length) return '<li class="d'+k.depth+'">'+k.head+'</li>';
+    return '<li class="d'+k.depth+' toc-group" data-g="'+k.id+'">'+k.head+
+      '<div class="toc-sub"><ul class="toc-sub-list">'+k.kids.map(render).join('')+'</ul></div></li>';
+  }
+  var html=tops.map(render).join('');
   [].forEach.call(document.querySelectorAll('.toc-list'),function(l){l.innerHTML=html});
   side.hidden=false; inline.hidden=false;
-  var links=[].slice.call(document.querySelectorAll('.toc-list a')), cur=-1, tick=false;
-  function update(){
-    tick=false; var idx=-1;
-    for(var i=0;i<heads.length;i++){ if(heads[i].getBoundingClientRect().top<=110) idx=i; else break; }
-    if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) idx=heads.length-1;
-    if(idx===cur) return; cur=idx;
+
+  /* 3) 현재 위치를 표시하고, 그 위치가 속한 묶음만 열어 둔다 (다른 곳으로 넘어가면 이전 묶음은 닫힌다) */
+  var links=[].slice.call(document.querySelectorAll('.toc-list a')), cur=-2, tick=false, lock=-2, lockTimer=0;
+  function show(idx){
+    cur=idx;
     links.forEach(function(a){ if(+a.dataset.i===idx){a.setAttribute('aria-current','true')} else {a.removeAttribute('aria-current')} });
+    [].forEach.call(side.querySelectorAll('.toc-group.is-open'),function(el){el.classList.remove('is-open')});
+    (idx>=0?openOf[idx]:[]).forEach(function(g){
+      var el=side.querySelector('.toc-group[data-g="'+g+'"]'); if(el) el.classList.add('is-open');
+    });
     var a=side.querySelector('a[aria-current]');
     if(a){ var r=a.getBoundingClientRect(), s=side.getBoundingClientRect(); if(r.top<s.top||r.bottom>s.bottom) a.scrollIntoView({block:'nearest'}); }
   }
-  window.addEventListener('scroll',function(){ if(!tick){tick=true; requestAnimationFrame(update)} },{passive:true});
+  function update(){
+    tick=false; if(lock>-2) return;
+    var idx=-1;
+    for(var i=0;i<heads.length;i++){ if(heads[i].getBoundingClientRect().top<=110) idx=i; else break; }
+    if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) idx=heads.length-1;
+    if(idx!==cur) show(idx);
+  }
+  function release(){ lock=-2; update(); }
+  side.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[data-i]'); if(!a) return;
+    lock=+a.dataset.i; show(lock); clearTimeout(lockTimer); lockTimer=setTimeout(release,400);
+  });
+  window.addEventListener('scroll',function(){
+    if(lock>-2){ clearTimeout(lockTimer); lockTimer=setTimeout(release,150); return; }
+    if(!tick){tick=true; requestAnimationFrame(update)}
+  },{passive:true});
   window.addEventListener('resize',update); update();
 })();
 </script>
