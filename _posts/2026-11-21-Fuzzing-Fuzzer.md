@@ -311,7 +311,6 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 | 커버리지 수집 | 컴파일 타임 계측, 에뮬레이션, 동적 계측 | 컴파일 타임 계측, 하드웨어(Intel PT/BTS) | SanitizerCoverage | TinyInst (동적 계측) |
 | 실행 방식 | fork 서버, 퍼시스턴트 모드 | 멀티 프로세스·스레드, 퍼시스턴트 모드 | In-process | 퍼시스턴트 모드 |
 | 주요 플랫폼 | Linux 중심 | Linux, BSD, macOS, Android 등 | Clang이 동작하는 환경 | Windows, macOS, Linux, Android |
-| 난이도 | 중간 | 중간 | 낮음 | 중간~높음 (바이너리 분석 필요) |
 
 ### <toc2>2. 장단점과 사용처 요약</toc2>
 
