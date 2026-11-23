@@ -243,5 +243,5 @@ TP/FP 개수 대신 문항마다 두 세션의 출력이 같은지, 다르다면
 
 ## 참고 자료
 
-- 논문 원문: <https://haichuanxuken.github.io/pdfs/ORISA_camera_ready.pdf>
-- IEEE S&P 2026 Accepted Papers_Cycle 2: <https://sp2026.ieee-security.org/accepted-papers.html>
+- [논문 원문](https://haichuanxuken.github.io/pdfs/ORISA_camera_ready.pdf)
+- [IEEE S&P 2026 Accepted Papers_Cycle 2](https://sp2026.ieee-security.org/accepted-papers.html)
