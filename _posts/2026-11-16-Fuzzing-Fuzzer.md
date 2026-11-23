@@ -1,5 +1,5 @@
 ---
-title: "[Study] 퍼징(Fuzzing)이란? — 퍼징의 종류와 대표 퍼저 비교"
+title: "[Study] 퍼징(Fuzzing)이란?"
 date: 2026-11-16 12:00:00 +0900
 categories: ["기술문서/리서치"]
 tags: [Study, Fuzzing, AFL++, honggfuzz, libFuzzer, Jackalope]

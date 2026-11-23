@@ -6,8 +6,11 @@ tags: [논문 리뷰, Review, Forensics, LLM]
 ---
 
 > **논문**: Recovering and Rehosting Mobile Local LLM Conversations and Contexts via Memory Forensics
+
 > **저자**: Haichuan Xu, David Oygenblik, Runze Zhang, Mingxuan Yao, Muhammad Ibrahim, Brendan Saltaformaggio (Georgia Institute of Technology)
+
 > **학회**: IEEE Symposium on Security and Privacy (IEEE S&P) 2026
+
 > **분야**: 디지털 포렌식 / 메모리 포렌식
 
 챗봇과 나눈 대화를 지우면 그 대화는 정말 사라질까? 클라우드 챗봇이라면 답은 "아니다"에 가깝다. 화면에서는 지워져도 서버 어딘가에는 로그가 남는다. 그렇다면 서버가 아예 없는 경우, 스마트폰 안에서만 돌아가는 로컬 LLM에서 대화를 지우면 어떨까.
