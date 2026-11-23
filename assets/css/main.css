@@ -194,7 +194,7 @@ html { scroll-behavior: smooth; }
 }
 
 /* 목차 펼침: 1단계는 항상 보이고, 하위 항목은 "마우스를 올렸을 때 / 선택했을 때 / 현재 위치가 그 묶음 안일 때"만 열린다 */
-.toc { --toc-speed: 0.22s; --toc-close-delay: 0.12s; }
+.toc { --toc-speed: 0.6s; --toc-close-delay: 0.16s; }
 .toc .toc-sub { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--toc-speed) ease var(--toc-close-delay); }
 .toc .toc-sub-list { list-style: none; margin: 0; padding: 0; min-height: 0; overflow: hidden; opacity: 0; transition: opacity var(--toc-speed) ease var(--toc-close-delay); }
 .toc .toc-group:is(.is-open, :hover, :focus-within) > .toc-sub { grid-template-rows: 1fr; transition-delay: 0s; }
